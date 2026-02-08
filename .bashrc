@@ -87,10 +87,43 @@ fi
 # colored GCC warnings and errors
 #export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
-# some more ls aliases
-alias ll='ls -alF'
+
+# ============ Navigation Aliases ============
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+alias ~='cd ~'
+
+# ============ ls Aliases ============
+alias ll='ls -alFh'
 alias la='ls -A'
 alias l='ls -CF'
+alias lt='ls -ltrah'
+
+# ============ Coding Workspace Aliases ============
+alias code='cd ~/Coding_Workspace'
+alias TTT='cd ~/Coding_Workspace/C++/Tic-Tac-Toe'
+alias 752='cd ~/Coding_Workspace/CSCE752'
+alias 676='cd ~/Coding_Workspace/CSCE676'
+alias 735='cd ~/Coding_Workspace/CSCE735'
+alias 650='cd ~/Coding_Workspace/STAT_650'
+
+# ============ Typo Fixes ============
+alias cD='cd'
+alias CD='cd'
+alias claer='clear'
+alias clera='clear'
+
+# ============ Find Files ============
+# Find file by name
+ff() {
+    find . -type f -iname "*$1*"
+}
+
+# Find directory by name
+fd() {
+    find . -type d -iname "*$1*"
+}
 
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
@@ -131,6 +164,11 @@ fi
 unset __conda_setup
 # <<< conda initialize <<<
 
+# Setting up ROS environment
+source /home/tyler/Coding_Workspace/ROS2/ros2_jazzy/install/setup.bash
+export QT_QPA_PLATFORM=xcb
+
+# Extract various archive types
 extract() {
     if [ -z ${1} ] || [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
         echo "Usage: extract <archive> [directory]"
@@ -171,5 +209,12 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 ######## Launch TMUX Session #########
-tmux
+# Only start tmux if not already in tmux and in interactive shell
+if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then
+    exec tmux
+fi
 
+# Added by `rbenv init` on Thu Jul 24 03:54:12 PM CDT 2025
+eval "$(~/.rbenv/bin/rbenv init - --no-rehash bash)"
+
+neofetch
